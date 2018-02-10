@@ -177,6 +177,7 @@ var _ = Describe("ListVolumes [Controller Server]", func() {
 			})
 		Expect(err).NotTo(HaveOccurred())
 		Expect(vols).NotTo(BeNil())
+		Expect(vols.GetEntries()).NotTo(BeNil())
 
 		for _, vol := range vols.GetEntries() {
 			verifyVolumeInfo(vol.GetVolumeInfo())
@@ -279,7 +280,7 @@ var _ = Describe("CreateVolume [Controller Server]", func() {
 	})
 
 	// Pending fix in mock file
-	It("should return appropriate values SingleNodeWriter WithCapacity 1Gi Type:Mount", func() {
+	It("[MOCKERRORS] should return appropriate values SingleNodeWriter WithCapacity 1Gi Type:Mount", func() {
 
 		By("creating a volume")
 		name := "sanity"

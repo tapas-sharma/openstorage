@@ -5,7 +5,7 @@ package mount
 import (
 	"regexp"
 
-	"github.com/docker/docker/pkg/mount"
+	"github.com/moby/moby/pkg/mount"
 	"github.com/libopenstorage/openstorage/pkg/keylock"
 )
 

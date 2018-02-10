@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/libopenstorage/openstorage/pkg/dbg"
 	"github.com/portworx/kvdb"
 	"github.com/portworx/kvdb/mem"
@@ -14,7 +14,7 @@ import (
 
 // NewManager can be used to instantiate ConfigManager
 // Users of this function are expected to manage the execution via context
-// github.com/Sirupsen/logrus package is used for logging internally
+// github.com/sirupsen/logrus package is used for logging internally
 func NewManager(ctx context.Context, kv kvdb.Kvdb) (ConfigManager, error) {
 	manager := new(configManager)
 	manager.cb = make(map[string]*callbackData)
@@ -63,7 +63,7 @@ func NewManager(ctx context.Context, kv kvdb.Kvdb) (ConfigManager, error) {
 
 // newManager can be used to instantiate configManager
 // Users of this function are expected to manage the execution via context
-// github.com/Sirupsen/logrus package is used for logging internally
+// github.com/sirupsen/logrus package is used for logging internally
 func newManager(ctx context.Context, kv kvdb.Kvdb) (*configManager, error) {
 	manager := new(configManager)
 	manager.cb = make(map[string]*callbackData)

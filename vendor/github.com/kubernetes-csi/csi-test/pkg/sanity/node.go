@@ -29,6 +29,10 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+var (
+	csiTargetPath = "/mnt/csi"
+)
+
 var _ = Describe("NodeGetCapabilities [Node Server]", func() {
 	var (
 		c csi.NodeClient

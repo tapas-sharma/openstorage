@@ -36,7 +36,7 @@ import (
 	"go.pedge.io/dlog"
 
 	"github.com/codegangsta/cli"
-	"github.com/docker/docker/pkg/reexec"
+	"github.com/moby/moby/pkg/reexec"
 	"github.com/libopenstorage/openstorage/api"
 	"github.com/libopenstorage/openstorage/api/flexvolume"
 	"github.com/libopenstorage/openstorage/api/server"
