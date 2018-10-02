@@ -54,7 +54,7 @@ func TestSdkCloudBackupCreate(t *testing.T) {
 			CredentialUUID: uuid,
 			Full:           false,
 		}).
-		Return(nil).
+		Return(&api.CloudBackupCreateResponse{TaskID: "good-backup-taskid"}, nil).
 		Times(1)
 
 	// Setup client
@@ -613,7 +613,7 @@ func TestSdkCloudBackupStateChange(t *testing.T) {
 		s.MockDriver().
 			EXPECT().
 			CloudBackupStateChange(&api.CloudBackupStateChangeRequest{
-				SrcVolumeID:    id,
+				TaskID:         id,
 				RequestedState: test.internalrs,
 			}).
 			Return(nil).
@@ -621,7 +621,7 @@ func TestSdkCloudBackupStateChange(t *testing.T) {
 
 		// Get info
 		_, err := c.StateChange(context.Background(), &api.SdkCloudBackupStateChangeRequest{
-			SrcVolumeId:    id,
+			TaskId:         id,
 			RequestedState: test.sdkrs,
 		})
 		assert.NoError(t, err)

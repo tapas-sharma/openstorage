@@ -44,15 +44,18 @@ func (s *CloudBackupServer) Create(
 	}
 
 	// Create the backup
-	if err := s.driver.CloudBackupCreate(&api.CloudBackupCreateRequest{
+	r, err := s.driver.CloudBackupCreate(&api.CloudBackupCreateRequest{
 		VolumeID:       req.GetVolumeId(),
 		CredentialUUID: req.GetCredentialId(),
 		Full:           req.GetFull(),
-	}); err != nil {
+	})
+	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create backup: %v", err)
 	}
 
-	return &api.SdkCloudBackupCreateResponse{}, nil
+	return &api.SdkCloudBackupCreateResponse{
+		TaskId: r.TaskID,
+	}, nil
 }
 
 // Restore a backup
@@ -79,6 +82,7 @@ func (s *CloudBackupServer) Restore(
 
 	return &api.SdkCloudBackupRestoreResponse{
 		RestoreVolumeId: r.RestoreVolumeID,
+		TaskId:          r.TaskID,
 	}, nil
 
 }
@@ -222,7 +226,7 @@ func (s *CloudBackupServer) StateChange(
 	req *api.SdkCloudBackupStateChangeRequest,
 ) (*api.SdkCloudBackupStateChangeResponse, error) {
 
-	if len(req.GetSrcVolumeId()) == 0 {
+	if len(req.GetTaskId()) == 0 {
 		return nil, status.Error(codes.InvalidArgument, "Must provide volume id")
 	} else if req.GetRequestedState() == api.SdkCloudBackupRequestedState_SdkCloudBackupRequestedStateUnknown {
 		return nil, status.Error(codes.InvalidArgument, "Must provide requested state")
@@ -241,7 +245,7 @@ func (s *CloudBackupServer) StateChange(
 	}
 
 	err := s.driver.CloudBackupStateChange(&api.CloudBackupStateChangeRequest{
-		SrcVolumeID:    req.GetSrcVolumeId(),
+		TaskID:         req.GetTaskId(),
 		RequestedState: rs,
 	})
 	if err != nil {

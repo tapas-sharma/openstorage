@@ -266,6 +266,11 @@ type CloudBackupCreateRequest struct {
 	Full bool
 }
 
+type CloudBackupCreateResponse struct {
+	// TaskID is the id of the task performing this backup
+	TaskID string
+}
+
 type CloudBackupGroupCreateRequest struct {
 	// GroupID indicates backup request for a volumegroup with this group id
 	GroupID string
@@ -295,6 +300,8 @@ type CloudBackupRestoreRequest struct {
 type CloudBackupRestoreResponse struct {
 	// RestoreVolumeID is the volumeID to which the backup is being restored
 	RestoreVolumeID string
+	// TaskID is the id of the task performing this restore
+	TaskID string
 }
 
 type CloudBackupGenericRequest struct {
@@ -352,6 +359,9 @@ type CloudBackupStatusRequest struct {
 	// Local indicates if only those backups/restores that are
 	// active on current node must be returned
 	Local bool
+	// TaskID is the backup/restore task id. If this is specified, SrcVolumeID is
+	// ignored
+	TaskID string
 }
 
 type CloudBackupOpType string
@@ -394,10 +404,14 @@ type CloudBackupStatus struct {
 	CompletedTime time.Time
 	// NodeID is the ID of the node where this Op is active
 	NodeID string
+	// SrcVolumeID is either the volume being backed-up or target volume to
+	// which a cloud backup is being restored
+	SrcVolumeID string
 }
 
 type CloudBackupStatusResponse struct {
 	// statuses is list of currently active/failed/done backup/restores
+	// map key is the id of the task
 	Statuses map[string]CloudBackupStatus
 }
 
@@ -434,9 +448,9 @@ type CloudBackupHistoryResponse struct {
 }
 
 type CloudBackupStateChangeRequest struct {
-	// SrcVolumeID is volume ID on which backup/restore
-	// state change is being requested
-	SrcVolumeID string
+	// TaskID is the backup/restore task for which state change
+	// is being requested
+	TaskID string
 	// RequestedState is desired state of the op
 	// can be pause/resume/stop
 	RequestedState string

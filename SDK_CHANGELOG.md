@@ -5,6 +5,15 @@
 
 ## Releases
 
+### v0.14.0 - Tech Preview (9/27/2018)
+
+* Following CloudBackup APIs have been refactored to include task id rather than
+* source volume id.
+* CloudBackupCreate now returns task id.
+* CloudBackupRestore too returns task id along with restore volume id.
+* CloudBackupStatusRequest can take task id as an optional parameter.
+* Map key for CloudBackupStatusResponse is task id rather than source volume id.
+* CloudBackupStateChange takes in taskid rather than source volume id.
 ### v0.13.0 - Tech Preview (9/27/2018)
 
 * Added new field to CloudBackup schedules that allows scheduled backups

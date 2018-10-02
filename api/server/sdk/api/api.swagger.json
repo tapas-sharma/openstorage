@@ -485,6 +485,12 @@
       "type": "object"
     },
     "apiSdkCloudBackupCreateResponse": {
+      "properties": {
+        "task_id": {
+          "title": "TaskId is the id of the task performing the backup",
+          "type": "string"
+        }
+      },
       "title": "Empty response",
       "type": "object"
     },
@@ -638,6 +644,10 @@
         "restore_volume_id": {
           "title": "VolumeID to which the backup is being restored",
           "type": "string"
+        },
+        "task_id": {
+          "title": "TaskId is the id of the task performing the restore",
+          "type": "string"
         }
       },
       "title": "Defines a response when restoring a volume from a backup stored by\na cloud provider",
@@ -717,8 +727,8 @@
           "$ref": "#/definitions/apiSdkCloudBackupRequestedState",
           "title": "The desired state of the operation"
         },
-        "src_volume_id": {
-          "title": "Describes the volume id on which backup/restore\nstate change is being requested",
+        "task_id": {
+          "title": "Describes the backup/restore task id\nstate change is being requested",
           "type": "string"
         }
       },
@@ -753,6 +763,10 @@
           "$ref": "#/definitions/apiSdkCloudBackupOpType",
           "title": "OpType indicates if this is a backup or restore"
         },
+        "src_volume_id": {
+          "title": "SourceVolumeID is the the volume that is either being backed up to cloud\nor target volume to which cloudsnap is being restored",
+          "type": "string"
+        },
         "start_time": {
           "format": "date-time",
           "title": "StartTime indicates Op's start time",
@@ -772,7 +786,7 @@
           "additionalProperties": {
             "$ref": "#/definitions/apiSdkCloudBackupStatus"
           },
-          "title": "Statuses is list of currently active/failed/done backup/restores where\nthe key is the volume ids of current volumes being backed up or restored",
+          "description": "Statuses is list of currently active/failed/done backup/restores where\nthe key is the id of the task performing backup/restore.",
           "type": "object"
         }
       },
@@ -2321,7 +2335,7 @@
   },
   "info": {
     "title": "OpenStorage SDK",
-    "version": "0.13.0"
+    "version": "0.14.0"
   },
   "paths": {
     "/v1/alerts": {
@@ -2685,7 +2699,7 @@
         "operationId": "Status",
         "parameters": [
           {
-            "description": "This is an optional value which is used to get information on the\nstatus of a backup for the specified volume. If no volume id is provided,\nthen status for all volumes is returned.",
+            "description": "This is an optional value which is used to get information on the\nstatus of a backup for the specified volume. If no volume id and TaskId\nis provided, then status for all volumes is returned.",
             "in": "query",
             "name": "volume_id",
             "required": false,
@@ -2698,6 +2712,13 @@
             "name": "local",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "description": "TaskId is the backup/restore task id, if this is specified,\nVolumeId is ignored.",
+            "in": "query",
+            "name": "task_id",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
