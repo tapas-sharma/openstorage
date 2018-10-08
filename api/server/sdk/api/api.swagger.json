@@ -476,6 +476,10 @@
           "title": "Full indicates if full backup is desired even though incremental is possible",
           "type": "boolean"
         },
+        "task_id": {
+          "title": "TaskId is the optional unique id of the task performing this backup",
+          "type": "string"
+        },
         "volume_id": {
           "title": "VolumeID of the volume for which cloudbackup is requested",
           "type": "string"
@@ -633,6 +637,10 @@
         },
         "restore_volume_name": {
           "title": "Optional volume Name of the new volume to be created\nin the cluster for restoring the cloudbackup",
+          "type": "string"
+        },
+        "task_id": {
+          "title": "TaskId is the optional unique id of the task performing this restore",
           "type": "string"
         }
       },

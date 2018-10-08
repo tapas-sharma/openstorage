@@ -27,6 +27,11 @@ func TestClientBackup(t *testing.T) {
 		VolumeID:       "badvol",
 		CredentialUUID: "",
 		Full:           false}).Return(nil, fmt.Errorf("Volume not found")).Times(1)
+	testVolDriver.MockDriver().EXPECT().CloudBackupCreate(&api.CloudBackupCreateRequest{
+		VolumeID:       "goodvol",
+		CredentialUUID: "",
+		Full:           false,
+		TaskID:         "unique-id-from-app"}).Return(&api.CloudBackupCreateResponse{TaskID: "unique-id-from-app"}, nil).Times(1)
 
 	// Create Backup
 	createResponse, err := client.VolumeDriver(cl).
@@ -43,6 +48,15 @@ func TestClientBackup(t *testing.T) {
 			Full:           false})
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Volume not found")
+	createResponse, err = client.VolumeDriver(cl).
+		CloudBackupCreate(&api.CloudBackupCreateRequest{
+			VolumeID:       "goodvol",
+			CredentialUUID: "",
+			Full:           false,
+			TaskID:         "unique-id-from-app"})
+	require.NoError(t, err)
+	require.Equal(t, createResponse.TaskID, "unique-id-from-app")
+
 }
 
 func TestClientGroupBackup(t *testing.T) {

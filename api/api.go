@@ -264,6 +264,9 @@ type CloudBackupCreateRequest struct {
 	CredentialUUID string
 	// Full indicates if full backup is desired even though incremental is possible
 	Full bool
+	// TaskID is optional unique id to be used for this backup
+	// Back up creates this by default
+	TaskID string
 }
 
 type CloudBackupCreateResponse struct {
@@ -295,6 +298,9 @@ type CloudBackupRestoreRequest struct {
 	// NodeID is the optional NodeID for provisioning restore
 	// volume (ResoreVolumeName should not be specified)
 	NodeID string
+	// TaskID is optional unique id to be used for this restore op
+	// restore creates this by default
+	TaskID string
 }
 
 type CloudBackupRestoreResponse struct {
@@ -380,6 +386,7 @@ const (
 	CloudBackupStatusPaused     = CloudBackupStatusType("Paused")
 	CloudBackupStatusStopped    = CloudBackupStatusType("Stopped")
 	CloudBackupStatusActive     = CloudBackupStatusType("Active")
+	CloudBackupStatusQueued     = CloudBackupStatusType("Queued")
 	CloudBackupStatusFailed     = CloudBackupStatusType("Failed")
 )
 

@@ -2014,6 +2014,8 @@ message SdkCloudBackupCreateRequest {
   string credential_id = 2;
   // Full indicates if full backup is desired even though incremental is possible
   bool full = 3;
+  // TaskId is the optional unique id of the task performing this backup
+  string task_id = 4;
 }
 
 // Empty response
@@ -2035,6 +2037,8 @@ message SdkCloudBackupRestoreRequest {
   // Optional for provisioning restore
   // volume (ResoreVolumeName should not be specified)
   string node_id = 4;
+  // TaskId is the optional unique id of the task performing this restore
+  string task_id = 5;
 }
 
 // Defines a response when restoring a volume from a backup stored by
