@@ -132,7 +132,7 @@ func TestFakeCloudBackupCreate(t *testing.T) {
 	}
 	r, err := d.CloudBackupCreate(req)
 	assert.Error(t, err)
-	assert.Empty(t, r.TaskID)
+	assert.Nil(t, r)
 
 	// Create a vol
 	name := "myvol"
@@ -148,7 +148,7 @@ func TestFakeCloudBackupCreate(t *testing.T) {
 	// Fail because no cred id
 	r, err = d.CloudBackupCreate(req)
 	assert.Error(t, err)
-	assert.Empty(t, r.TaskID)
+	assert.Nil(t, r)
 	// Create cred
 	credid, err := d.CredsCreate(map[string]string{
 		"hello": "world",

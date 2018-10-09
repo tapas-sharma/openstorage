@@ -414,8 +414,11 @@ func (d *driver) CloudBackupCreate(
 	input *api.CloudBackupCreateRequest,
 ) (*api.CloudBackupCreateResponse, error) {
 	taskId, _, err := d.cloudBackupCreate(input)
-	resp := &api.CloudBackupCreateResponse{TaskID: taskId}
-	return resp, err
+	if err == nil {
+		resp := &api.CloudBackupCreateResponse{TaskID: taskId}
+		return resp, err
+	}
+	return nil, err
 }
 
 // cloudBackupCreate uploads snapshot of a volume to the cloud and returns the
