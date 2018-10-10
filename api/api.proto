@@ -2174,6 +2174,8 @@ message SdkCloudBackupStatus {
   // SourceVolumeID is the the volume that is either being backed up to cloud
   // or target volume to which cloudsnap is being restored
   string src_volume_id = 8;
+  // ErrString indicates the failure cause for failed backup/restore
+  string err_string = 9;
 }
 
 // Defines a request to retreive the status of a backup or restore for a

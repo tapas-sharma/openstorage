@@ -414,6 +414,8 @@ type CloudBackupStatus struct {
 	// SrcVolumeID is either the volume being backed-up or target volume to
 	// which a cloud backup is being restored
 	SrcVolumeID string
+	// ErrString indicates failure cause in case of failed backup/restore
+	ErrString string
 }
 
 type CloudBackupStatusResponse struct {
@@ -860,6 +862,7 @@ func (s CloudBackupStatus) ToSdkCloudBackupStatus() *SdkCloudBackupStatus {
 		Status:    CloudBackupStatusTypeToSdkCloudBackupStatusType(s.Status),
 		BytesDone: s.BytesDone,
 		NodeId:    s.NodeID,
+		ErrString: s.ErrString,
 	}
 
 	status.StartTime, _ = ptypes.TimestampProto(s.StartTime)

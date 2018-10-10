@@ -763,6 +763,10 @@
           "title": "CompletedTime indicates Op's completed time",
           "type": "string"
         },
+        "err_string": {
+          "title": "ErrString indicates the failure cause for failed backup/restore",
+          "type": "string"
+        },
         "node_id": {
           "title": "NodeID is the ID of the node where this Op is active",
           "type": "string"
